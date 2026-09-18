@@ -53,6 +53,25 @@ Restart Claude Desktop to load the configuration, keep FreeCAD open with its RPC
 server running, and ask Claude to create a model. Connections use `localhost` by
 default.
 
+## Headless mode (no GUI, no display)
+
+FreeCAD can run the whole bridge headless — for servers, containers and CI —
+where there is no X/Wayland session to host the addon's workbench:
+
+```bash
+freecadcmd /path/to/addon/FreeCADMCP/headless_server.py
+# -> FreeCAD headless MCP bridge listening on localhost:9875
+```
+
+Point any MCP client at `freecad-mcp` exactly as usual; it cannot tell whether
+the far end is a GUI or a headless process. Modelling, `execute_code`, object
+CRUD and volume/deterministic geometry work unchanged. Screenshots and
+`run_fem_analysis` need a viewport and report that they are unavailable instead
+of erroring.
+
+See [headless mode](docs/headless.md) for configuration, Docker usage and
+limitations.
+
 ## Documentation
 
 | Guide | Contents |
@@ -61,6 +80,7 @@ default.
 | [Configuration](docs/configuration.md) | Auto-start, text feedback, remote connections |
 | [Tools](docs/tools.md) | Available tools, screenshots, FEM analysis |
 | [Code execution](docs/execution.md) | GUI execution, background jobs, headless scripts, timeout troubleshooting |
+| [Headless mode](docs/headless.md) | Run the bridge with no GUI/display: flags, Docker, limitations |
 | [Demos and examples](docs/examples.md) | Design demos, FEM example, ADK and LangChain integrations |
 
 ## Contributors
